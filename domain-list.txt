@@ -17,6 +17,9 @@ google.blog
 linux.cafe
 google.md
 google.co
+gooogle.info
+google.kiwi
+google.cl
 dotmobi.mobi
 google.wf
 google.me
