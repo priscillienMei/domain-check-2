@@ -315,10 +315,17 @@ check_domain_status()
     then
 	    ${WHOIS} -h whois.aero "${1}" > ${WHOIS_TMP}
     fi
+
     if [ "${TLDTYPE}" == "eu" ];
     then
 	    ${WHOIS} -h whois.ovh.com "${1}" > ${WHOIS_TMP}
     fi
+
+    if [ "${TLDTYPE}" == "bz" ];
+    then
+	    ${WHOIS} -h whois.belizenic.bz "${1}" > ${WHOIS_TMP}
+    fi
+
     # Parse out the expiration date and registrar -- uses the last registrar it finds
     REGISTRAR=`cat ${WHOIS_TMP} | ${AWK} -F: '/Registrar:/ && $2 != ""  { REGISTRAR=substr($2,2,17) } END { print REGISTRAR }'`
 
@@ -522,7 +529,7 @@ check_domain_status()
 	tday=`echo ${tdomdate} | ${CUT} -d "-" -f 3 | ${CUT} -d "T" -f 1`
 	DOMAINDATE=`echo "${tday}-${tmonth}-${tyear}"`       
 
-    elif [ "${TLDTYPE}" == "me" -o  "${TLDTYPE}" == "bz" -o  "${TLDTYPE}" == "io" -o "${TLDTYPE}" == "kiwi" -o "${TLDTYPE}" == "live" -o "${TLDTYPE}" == "site" -o "${TLDTYPE}" == "website" -o "${TLDTYPE}" == "ovh" -o "${TLDTYPE}" == "best" -o "${TLDTYPE}" == "online" -o "${TLDTYPE}" == "shop" -o "${TLDTYPE}" == "space" -o "${TLDTYPE}" == "cloud" -o "${TLDTYPE}" == "tech" -o "${TLDTYPE}" == "agency" -o "${TLDTYPE}" == "fans" ]; # for .me .io .live .kiwi .site .website .ovh .best .online .shop .space .cloud .tech .agency .fans domain by PriscillienMei 12-apr-2022
+    elif [ "${TLDTYPE}" == "me" -o  "${TLDTYPE}" == "io" -o "${TLDTYPE}" == "kiwi" -o "${TLDTYPE}" == "live" -o "${TLDTYPE}" == "site" -o "${TLDTYPE}" == "website" -o "${TLDTYPE}" == "ovh" -o "${TLDTYPE}" == "best" -o "${TLDTYPE}" == "online" -o "${TLDTYPE}" == "shop" -o "${TLDTYPE}" == "space" -o "${TLDTYPE}" == "cloud" -o "${TLDTYPE}" == "tech" -o "${TLDTYPE}" == "agency" -o "${TLDTYPE}" == "fans" ]; # for .me .io .live .kiwi .site .website .ovh .best .online .shop .space .cloud .tech .agency .fans domain by PriscillienMei 12-apr-2022
     then
 	tdomdate=`cat ${WHOIS_TMP} | ${AWK} '/Registry Expiry Date:/ { print $4 }'`
 	tyear=`echo ${tdomdate} | ${CUT} -d "-" -f 1`
